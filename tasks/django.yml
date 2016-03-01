@@ -1,0 +1,46 @@
+---
+- name: Ensure packages needed for Django are present
+  apt: name={{ item }} state=latest
+  with_items:
+    - python3-dev
+    - python3-venv
+    - libjpeg-dev # pillow
+    - libpng12-dev # pillow
+    - libpq-dev # psycopg
+    - gettext
+- name: Ensure required folders are there
+  file: path={{ django_path }} state=directory owner={{ django_user }} group={{ django_user }}
+- include: srcsync.yml
+- block:
+  - name: Create a virtualenv for django
+    command: "/usr/bin/python3 -m venv {{ django_env }} creates={{ django_env }}"
+  - name: Install django requirements
+    command: "{{ django_env }}/bin/pip install -r {{ django_requirements_file }}"
+    register: pip_install_result
+    changed_when: "'Successfully installed' in pip_install_result.stdout"
+  - name: Create local_settings.py
+    template: src=local_settings.py dest={{ django_path }}/local_settings.py
+    notify:
+      - wsgi restart 
+  - name: Symlink local_settings.py into our venv's site-packages
+    file:
+      path: "{{ django_sitepackages_path }}/local_settings.py"
+      state: link
+      src: "{{ django_path }}/local_settings.py"
+  - name: Migrate
+    django_manage:
+      app_path: "{{ django_src_path }}"
+      command: migrate
+      virtualenv: "{{ django_env }}"
+  - name: Load fixtures
+    django_manage:
+      app_path: "{{ django_src_path }}"
+      command: "loaddata {{ django_src_path }}/demoapp/fixtures/things.json"
+      virtualenv: "{{ django_env }}"
+  - name: Collect static
+    django_manage:
+      app_path: "{{ django_src_path }}"
+      command: collectstatic
+      virtualenv: "{{ django_env }}"
+  become: yes
+  become_user: "{{ django_user }}"

@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI Instance to serve django
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/uwsgi --ini {{django_path}}/uwsgi.ini
+Restart=always
+RestartSec=5s
+KillSignal=SIGQUIT
+
+[Install]
+WantedBy=multi-user.target
+

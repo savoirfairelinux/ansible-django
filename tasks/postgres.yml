@@ -1,0 +1,17 @@
+---
+- name: Ensure packages needed for posgres are present
+  apt: name={{ item }} state=latest
+  with_items:
+    - postgresql
+    - postgresql-client
+    - postgresql-server-dev-all
+    - python-psycopg2 # for ansible's postgresql module
+- name: Ensure that postgresql is started
+  service: name=postgresql state=started enabled=yes
+- block:
+    - name: Ensure that we have a DB
+      postgresql_db: name={{ django_dbname }}
+    - name: Ensure that we have a DB user
+      postgresql_user: name={{ django_dbuser }} db={{ django_dbname }} password={{ django_dbpass }} priv=ALL
+  become: yes
+  become_user: postgres

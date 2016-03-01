@@ -1,0 +1,14 @@
+---
+- name: Ensure packages needed for nginx are present
+  apt: name={{ item }} state=latest
+  with_items:
+    - nginx
+- name: Delete default site
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify: nginx restart
+- name: Create nginx sites config
+  template: src={{item}}.conf dest=/etc/nginx/sites-enabled/{{item}}.conf
+  with_items: "{{nginx_config_files}}"
+  notify:
+    - nginx restart
+

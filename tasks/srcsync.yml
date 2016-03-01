@@ -1,0 +1,7 @@
+---
+- name: Ensure project folder is symlinked
+  file:
+    path: "{{ django_project_path }}"
+    state: link
+    src: "{{ django_project_symlink_dest }}"
+

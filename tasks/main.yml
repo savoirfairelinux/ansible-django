@@ -1,0 +1,6 @@
+---
+- include: system.yml
+- include: postgres.yml
+- include: django.yml
+- include: wsgi.yml
+- include: nginx.yml

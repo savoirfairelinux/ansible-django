@@ -1,0 +1,44 @@
+---
+# Root path of the django project
+django_path: /opt/django
+# Domain name under which the project is served. Ends up in ALLOWED_HOSTS.
+django_domain_name: django.vagrant.dev
+# Path of the virtualenv where we install python dependencies
+django_env: "{{ django_path }}/env"
+# Path for the site-packages folder inside the virtualenv (you normally don't have to change this
+# unless it's the wrong path). This is where we go place the "local_settings.py" file.
+django_sitepackages_path: "{{ django_env }}/lib/python3.4/site-packages"
+# Path where the source of the project is placed.
+django_project_path: "{{ django_path }}/project"
+# Path, inside the project's source, where "manage.py" lives.
+django_src_path: "{{ django_project_path }}/src"
+# Path to a requirements file. This is what will be installed inside our virtualenv.
+django_requirements_file: "{{ django_project_path }}/requirements.txt"
+# If set, we place a symlink at django_project_path pointing to this path. Usually used in
+# Vagrant environment, allowing us to do live reloads upon file edits.
+django_project_symlink_dest: ""
+# Owner of django_path. Most commands in this role are ran under this user.
+# Will be created if it doesn't exist.
+django_user: django
+# User to use for db connection.
+django_dbuser: "{{ django_user }}"
+# DB name to use.
+django_dbname: django
+# password to use for db connection.
+django_dbpass: whatever
+# Whether we run django in debug mode.
+django_debug: no
+# Ends up in SECRET_KEY setting.
+django_secret_key: whatever
+# Ends up in "processes" uwsgi config
+django_uwsgi_process_count: 5
+# Set to yes if you want to enable SSL
+django_ssl: no
+# Path to SSL cert
+django_ssl_cert_path: ""
+# Path to SSL private key
+django_ssl_key_path: ""
+# List of config templates that will be generated during this role execution.
+nginx_config_files:
+  - django
+
