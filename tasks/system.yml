@@ -7,6 +7,7 @@
     - rsync
     - sudo
     - build-essential
+    - git
 - name: Ensure that django_user exists
   user:
     name: "{{ django_user }}"

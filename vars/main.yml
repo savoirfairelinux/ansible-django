@@ -1,8 +1,10 @@
 ---
+# Name used as a default value in most variables below
+django_name: django
 # Root path of the django project
-django_path: /opt/django
+django_path: "/opt/{{ django_name }}"
 # Domain name under which the project is served. Ends up in ALLOWED_HOSTS.
-django_domain_name: django.vagrant.dev
+django_domain_name: "{{ django_name }}.vagrant.dev"
 # Path of the virtualenv where we install python dependencies
 django_env: "{{ django_path }}/env"
 # Path for the site-packages folder inside the virtualenv (you normally don't have to change this
@@ -14,16 +16,20 @@ django_project_path: "{{ django_path }}/project"
 django_src_path: "{{ django_project_path }}/src"
 # Path to a requirements file. This is what will be installed inside our virtualenv.
 django_requirements_file: "{{ django_project_path }}/requirements.txt"
+# URL to git repo of the project. if django_project_symlink_dest isn't set, this repo will be
+# cloned in django_project_path.
+django_project_repo_url: ""
+django_project_repo_version: master
 # If set, we place a symlink at django_project_path pointing to this path. Usually used in
 # Vagrant environment, allowing us to do live reloads upon file edits.
 django_project_symlink_dest: ""
 # Owner of django_path. Most commands in this role are ran under this user.
 # Will be created if it doesn't exist.
-django_user: django
+django_user: "{{ django_name }}"
 # User to use for db connection.
 django_dbuser: "{{ django_user }}"
 # DB name to use.
-django_dbname: django
+django_dbname: "{{ django_name }}"
 # password to use for db connection.
 django_dbpass: whatever
 # Whether we run django in debug mode.

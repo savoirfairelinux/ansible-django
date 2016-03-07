@@ -1,7 +1,27 @@
 ---
+# Symlink scenario
 - name: Ensure project folder is symlinked
   file:
     path: "{{ django_project_path }}"
     state: link
     src: "{{ django_project_symlink_dest }}"
+  when: django_project_symlink_dest != ""
+
+# Git clone scenario
+- block:
+  - name: Clone the repo for the django project
+    git:
+      repo: "{{ django_project_repo_url }}"
+      version: "{{ django_project_repo_version }}"
+      dest: "{{ django_project_path }}"
+      accept_hostkey: yes
+  - name: Fix synced src's permissions
+    file:
+      path: "{{ django_project_path }}/src"
+      state: directory
+      owner: "{{ django_user }}"
+      group: "{{ django_user }}"
+      recurse: yes
+      mode: "u=rwX,g=rX,o=" # X != x, remember
+  when: django_project_symlink_dest == ""
 
