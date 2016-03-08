@@ -1,6 +1,10 @@
 ---
 # Name used as a default value in most variables below
 django_name: django
+# Whether the project is in python 3
+django_ispython3: yes
+# python executable name. re-used in other variables below
+django_pythonexec: "{{ django_ispython3 | ternary('python3.4', 'python2.7') }}"
 # Root path of the django project
 django_path: "/opt/{{ django_name }}"
 # Domain name under which the project is served. Ends up in ALLOWED_HOSTS.
@@ -9,11 +13,15 @@ django_domain_name: "{{ django_name }}.vagrant.dev"
 django_env: "{{ django_path }}/env"
 # Path for the site-packages folder inside the virtualenv (you normally don't have to change this
 # unless it's the wrong path). This is where we go place the "local_settings.py" file.
-django_sitepackages_path: "{{ django_env }}/lib/python3.4/site-packages"
+django_sitepackages_path: "{{ django_env }}/lib/{{ django_pythonexec }}/site-packages"
 # Path where the source of the project is placed.
 django_project_path: "{{ django_path }}/project"
 # Path, inside the project's source, where "manage.py" lives.
 django_src_path: "{{ django_project_path }}/src"
+# Path for STATIC_ROOT
+django_static_path: "{{ django_path }}/static"
+# Path for MEDIA_ROOT
+django_media_path: "{{ django_path }}/media"
 # Path to a requirements file. This is what will be installed inside our virtualenv.
 django_requirements_file: "{{ django_project_path }}/requirements.txt"
 # URL to git repo of the project. if django_project_symlink_dest isn't set, this repo will be
@@ -26,18 +34,24 @@ django_project_symlink_dest: ""
 # Owner of django_path. Most commands in this role are ran under this user.
 # Will be created if it doesn't exist.
 django_user: "{{ django_name }}"
+# Type of database to install. Choices: postgres, mariadb
+django_dbtype: postgres
 # User to use for db connection.
 django_dbuser: "{{ django_user }}"
 # DB name to use.
 django_dbname: "{{ django_name }}"
 # password to use for db connection.
 django_dbpass: whatever
+# Value of the ENGINE param in Django settings' DATABASES dictionary.
+django_dbengine_name: "django.db.backends.{{ (django_dbtype == 'postgres') | ternary('postgresql_psycopg2', 'mysql') }}"
 # Whether we run django in debug mode.
 django_debug: no
 # Ends up in SECRET_KEY setting.
 django_secret_key: whatever
 # Ends up in "processes" uwsgi config
 django_uwsgi_process_count: 5
+# Fixtures to load in django after deployment. list of paths relative to manage.py
+django_fixtures_to_load: []
 # Set to yes if you want to enable SSL
 django_ssl: no
 # Path to SSL cert

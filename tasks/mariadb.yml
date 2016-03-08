@@ -1,0 +1,14 @@
+---
+- name: Ensure packages needed for mariadb are present
+  apt: "name={{ item }} state=latest"
+  with_items:
+    - mariadb-server
+    - mariadb-client
+    - libmysqlclient-dev # for Python's mysqlclient pkg
+    - python-mysqldb # for ansible's mysql module
+- name: Ensure that mariadb is started
+  service: name=mysql state=started enabled=yes
+- name: Ensure that we have a DB
+  mysql_db: "name={{ django_dbname }}"
+- name: Ensure that we have a DB user
+  mysql_user: "name={{ django_dbuser }} priv={{ django_dbname }}.*:ALL password={{ django_dbpass }}"

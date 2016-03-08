@@ -17,7 +17,7 @@
       accept_hostkey: yes
   - name: Fix synced src's permissions
     file:
-      path: "{{ django_project_path }}/src"
+      path: "{{ django_src_path }}"
       state: directory
       owner: "{{ django_user }}"
       group: "{{ django_user }}"

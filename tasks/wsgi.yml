@@ -3,6 +3,7 @@
   apt: name={{ item }} state=latest
   with_items:
     - uwsgi
+    - uwsgi-plugin-python
     - uwsgi-plugin-python3
 - name: Create uWSGI config
   template: src=uwsgi.ini dest={{ django_path }}/uwsgi.ini

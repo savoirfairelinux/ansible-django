@@ -5,6 +5,7 @@
     - postgresql
     - postgresql-client
     - postgresql-server-dev-all
+    - libpq-dev # for psycopg
     - python-psycopg2 # for ansible's postgresql module
 - name: Ensure that postgresql is started
   service: name=postgresql state=started enabled=yes

@@ -4,7 +4,7 @@ DEBUG = {% if django_debug %}True{% else %}False{% endif %}
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': '{{ django_dbengine_name }}',
         'NAME': '{{ django_dbname }}',
         'USER': '{{ django_dbuser }}',
         'PASSWORD': '{{ django_dbpass }}',
