@@ -13,7 +13,7 @@ instances.
 
 ## Usage
 
-You call this role as with any other roles. See [vars file](vars/main.yml) for customisation
+You call this role as with any other roles. See [vars file](defaults/main.yml) for customisation
 options.
 
 Here's an example usage for a local development environment:
