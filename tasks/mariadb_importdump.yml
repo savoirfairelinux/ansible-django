@@ -1,0 +1,28 @@
+---
+- name: Is our databate empty?
+  shell: "mysql -e \"select if(count(*)>0,'populated','empty') as status from information_schema.tables where TABLE_SCHEMA = '{{ django_dbname }}'\""
+  register: is_database_empty
+- block:
+  - name: Is our dump file on the remote?
+    stat:
+      path: "{{ django_initialdump_path }}"
+    register: localdump_stat_result
+  - name: Import local dump into mysql db
+    mysql_db:
+      name: "{{ django_dbname }}"
+      state: import
+      target: "{{ django_initialdump_path }}"
+    when: localdump_stat_result.stat.exists
+  - block:
+    - name: Copy DB dump over
+      copy:
+        src: "{{ django_initialdump_path }}"
+        dest: "/tmp/{{ django_initialdump_path | basename }}"
+    - name: Import copied dump into mysql db
+      mysql_db:
+        name: "{{ django_dbname }}"
+        state: import
+        target: "/tmp/{{ django_initialdump_path | basename }}"
+    when: not localdump_stat_result.stat.exists
+  when: "'empty' in is_database_empty.stdout"
+
