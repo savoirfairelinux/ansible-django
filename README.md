@@ -10,6 +10,7 @@ instances.
 
 * Ansible 2.0+
 * Debian Jessie on the target system
+* A provisioning that runs [ansible-common][ansible-common] before this.
 
 ## Usage
 
@@ -36,4 +37,5 @@ live reloads when we edit files on the host.
 
 [nginx]: https://www.nginx.com/
 [uwsgi]: https://github.com/unbit/uwsgi-docs
+[ansible-common]: https://gitlab.savoirfairelinux.com/devops/ansible-common
 

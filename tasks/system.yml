@@ -1,13 +1,4 @@
 ---
-- name: apt-get update/upgrade
-  apt: update_cache=yes upgrade=yes cache_valid_time=3600
-- name: Ensure packages needed for basic provisioning are present
-  apt: name={{ item }} state=latest
-  with_items:
-    - rsync
-    - sudo
-    - build-essential
-    - git
 - name: Ensure that django_user exists
   user:
     name: "{{ django_user }}"
