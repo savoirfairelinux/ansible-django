@@ -15,6 +15,8 @@ DATABASES = {
 SECRET_KEY = '{{ django_secret_key }}'
 
 PROJECT_ROOT = '{{ django_path }}'
+GIT_ROOT = '{{ django_project_path }}'
+SRC_ROOT = '{{ django_src_path }}'
 PROJECT_DOMAIN = '{{ django_domain_name }}'
 PROJECT_ENVPATH = '{{ django_env }}'
 
