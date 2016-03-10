@@ -11,6 +11,9 @@
 - name: Ensure that we have a DB
   mysql_db: "name={{ django_dbname }}"
 - name: Ensure that we have a DB user
-  mysql_user: "name={{ django_dbuser }} priv={{ django_dbname }}.*:ALL password={{ django_dbpass }}"
+  mysql_user:
+    name: "{{ django_dbuser }}"
+    priv: "{{ django_dbname }}.*:ALL,GRANT/test_{{ django_dbname }}.*:ALL,GRANT"
+    password: "{{ django_dbpass }}"
 - include: mariadb_importdump.yml
   when: "{{ django_initialdump_path != '' }}"
