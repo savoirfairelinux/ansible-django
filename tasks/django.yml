@@ -26,10 +26,10 @@
 - include: srcsync.yml
 - block:
   - name: Create a virtualenv (py3) for django
-    command: "/usr/bin/python3 -m venv {{ django_env }} creates={{ django_env }}"
+    command: "/usr/bin/python3 -m venv --system-site-packages {{ django_env }} creates={{ django_env }}"
     when: django_ispython3
   - name: Create a virtualenv (py2) for django
-    command: "virtualenv {{ django_env }} creates={{ django_env }}"
+    command: "virtualenv {{ django_env }} --system-site-packages creates={{ django_env }}"
     when: not django_ispython3
   - name: Install django requirements
     command: "{{ django_env }}/bin/pip install -r {{ django_requirements_file }}"
