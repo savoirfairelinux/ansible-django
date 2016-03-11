@@ -20,9 +20,9 @@
     file:
       path: "{{ django_src_path }}"
       state: directory
-      owner: "{{ django_user }}"
-      group: "{{ django_user }}"
       recurse: yes
       mode: "u=rwX,g=rX,o=" # X != x, remember
   when: django_project_symlink_dest == ""
+  become: yes
+  become_user: "{{ django_user }}"
 
