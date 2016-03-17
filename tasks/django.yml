@@ -48,7 +48,7 @@
 
   - name: Symlink local_settings.py into our venv's site-packages
     file:
-      path: "{{ django_settings_path }}/local_settings.py"
+      path: "{{ django_sitepackages_path }}/local_settings.py"
       state: link
       src: "{{ django_path }}/local_settings.py"
 
