@@ -5,19 +5,23 @@
     - uwsgi
     - uwsgi-plugin-python
     - uwsgi-plugin-python3
+
 - name: Create uWSGI config
   template: src=uwsgi.ini dest={{ django_path }}/uwsgi.ini
   notify:
-    - wsgi restart 
-    - nginx restart 
+    - wsgi restart
+    - nginx restart
+
 - name: Setup systemd service
   template: src=uwsgi_systemd dest=/etc/systemd/system/django-wsgi.service owner=root group=root mode=0644
   register: wsgi_service
   notify:
-    - wsgi restart 
-    - nginx restart 
+    - wsgi restart
+    - nginx restart
+
 - name: Reload systemd because we've just updated a service
   shell: systemctl daemon-reload
   when: wsgi_service|changed
+
 - name: Ensure that the wsgi service is enabled
   service: name=django-wsgi enabled=yes

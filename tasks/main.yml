@@ -6,8 +6,10 @@
   fail:
     msg: "django_dbtype must be either 'postgres' or 'mariadb'"
   when: "django_dbtype not in ['postgres', 'mariadb']"
+
 - include: postgres.yml
   when: django_dbtype == 'postgres'
+
 - include: mariadb.yml
   when: django_dbtype == 'mariadb'
 

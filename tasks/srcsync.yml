@@ -16,6 +16,7 @@
       dest: "{{ django_project_path }}"
       accept_hostkey: yes
       recursive: no
+
   - name: Fix synced src's permissions
     file:
       path: "{{ django_src_path }}"

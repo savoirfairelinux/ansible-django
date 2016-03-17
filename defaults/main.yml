@@ -3,21 +3,17 @@
 django_name: django
 # Whether the project is in python 3
 django_ispython3: yes
-# python executable name. re-used in other variables below
-django_pythonexec: "{{ django_ispython3 | ternary('python3.4', 'python2.7') }}"
 # Root path of the django project
 django_path: "/opt/{{ django_name }}"
 # Domain name under which the project is served. Ends up in ALLOWED_HOSTS.
 django_domain_name: "{{ django_name }}.vagrant.dev"
 # Path of the virtualenv where we install python dependencies
 django_env: "{{ django_path }}/env"
-# Path for the site-packages folder inside the virtualenv (you normally don't have to change this
-# unless it's the wrong path). This is where we go place the "local_settings.py" file.
-django_sitepackages_path: "{{ django_env }}/lib/{{ django_pythonexec }}/site-packages"
 # Path where the source of the project is placed.
 django_project_path: "{{ django_path }}/project"
 # Path, inside the project's source, where "manage.py" lives.
 django_src_path: "{{ django_project_path }}/src"
+django_settings_path: "{{ django_src_path }}/demo"
 # Path for STATIC_ROOT
 django_static_path: "{{ django_path }}/static"
 # Path for MEDIA_ROOT

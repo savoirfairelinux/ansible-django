@@ -7,8 +7,10 @@
     - postgresql-server-dev-all
     - libpq-dev # for psycopg
     - python-psycopg2 # for ansible's postgresql module
+
 - name: Ensure that postgresql is started
   service: name=postgresql state=started enabled=yes
+
 - name: Is postgres REALLY started?
   shell: pg_isready
   ignore_errors: yes
@@ -16,13 +18,16 @@
 # This is due to a weird locale error happening when apt-get installing postgres over SSH. For some
 # weird locale reason, apt-get is unable to create the clusters and asks to run the command below
 # manually. If we run it, it works (strangely). So there we go, we run it.
+
 - name: Ensure that our cluster is created
   shell: "pg_createcluster 9.4 main --start"
   when: pg_isready_result|failed
 - block:
     - name: Ensure that we have a DB
       postgresql_db: "name={{ django_dbname }}"
+
     - name: Ensure that we have a DB user
-      postgresql_user: "name={{ django_dbuser }} db={{ django_dbname }} password={{ django_dbpass }} priv=ALL"
+      postgresql_user: "name={{ django_dbuser }} db={{ django_dbname }} password={{ django_dbpass }} priv=ALL role_attr_flags=CREATEDB"
+
   become: yes
   become_user: postgres
