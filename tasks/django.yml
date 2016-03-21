@@ -69,7 +69,11 @@
     django_manage:
       app_path: "{{ django_src_path }}"
       command: collectstatic
-      link: no
+      # When we're in production, collected static files have a different access model then the
+      # rest of the project, so we don't want to symlink it. However, when we're in development
+      # mode, we prefer to be able to quickly see the result of our static files, so we want to
+      # symlink it.
+      link: "{{ django_debug }}"
       virtualenv: "{{ django_env }}"
   become: yes
   become_user: "{{ django_user }}"
