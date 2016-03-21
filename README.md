@@ -35,6 +35,22 @@ As you can see, we override `django_debug` because we're in development mode, an
 `django_project_symlink_dest` to set the project in "symlink mode", which allows us to trigger
 live reloads when we edit files on the host.
 
+## Features higlight
+
+All details about the features below are accessibles in the variable files, but here's a highlight.
+
+### Postgres SQL or MariaDB
+
+Your backend can be either Postgres SQL (default) or MariaDB. You can choose your DB with
+`django_dbtype`.
+
+### Git clone or symlink
+
+The project's source that lives at `django_project_path` can be either from a git clone or a
+symlink. In a "real" environment, you'll want to clone from a git repo, but on a local environment,
+you'll want to symlink to your Vagrant share so that your changes to the code are taken into
+account immediately. See `django_project_symlink_dest`.
+
 [nginx]: https://www.nginx.com/
 [uwsgi]: https://github.com/unbit/uwsgi-docs
 [ansible-common]: https://gitlab.savoirfairelinux.com/devops/ansible-common
