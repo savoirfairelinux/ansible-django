@@ -21,7 +21,7 @@
   when: django_ispython3
 
 - name: Ensure required folders are there
-  file: path={{ item }} state=directory owner={{ django_user }} group={{ django_user }}
+  file: path={{ item }} state=directory owner={{ django_user }}
   with_items:
     - "{{ django_path }}"
     - "{{ django_static_path }}"
@@ -69,7 +69,20 @@
     django_manage:
       app_path: "{{ django_src_path }}"
       command: collectstatic
-      link: yes
+      link: no
       virtualenv: "{{ django_env }}"
   become: yes
   become_user: "{{ django_user }}"
+
+# static/media need to be accessible by nginx
+- name: Fix static/media paths permissions
+  file:
+      path: "{{ item }}"
+      state: directory
+      group: www-data
+      recurse: yes
+      mode: "u=rwX,g=rX,o=" # X != x, remember
+  with_items:
+    - "{{ django_static_path }}"
+    - "{{ django_media_path }}"
+
