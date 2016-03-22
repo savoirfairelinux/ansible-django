@@ -19,4 +19,4 @@
     priv: "{{ django_dbname }}.*:ALL,GRANT/test_{{ django_dbname }}.*:ALL,GRANT"
     password: "{{ django_dbpass }}"
 - include: mariadb_importdump.yml
-  when: "{{ django_initialdump_path != '' }}"
+  when: "{{ django_initial_archive_path != '' }}"

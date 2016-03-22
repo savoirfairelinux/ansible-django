@@ -3,29 +3,23 @@
   shell: "mysql -e \"select if(count(*)>0,'populated','empty') as status from information_schema.tables where TABLE_SCHEMA = '{{ django_dbname }}'\""
   register: is_database_empty
 - block:
-  - name: Is our dump file on the remote?
+  - name: Is our initial archive file on the remote?
     stat:
-      path: "{{ django_initialdump_path }}"
+      path: "{{ django_initial_archive_path }}"
     register: localdump_stat_result
 
-  - name: Import local dump into mysql db
-    mysql_db:
-      name: "{{ django_dbname }}"
-      state: import
-      target: "{{ django_initialdump_path }}"
+  - name: Import local archive's dump into mysql db
+    shell: "tar xOf {{ django_initial_archive_path }} dump.sql | mysql -D {{ django_dbname }}"
     when: localdump_stat_result.stat.exists
 
   - name: Copy DB dump over
     copy:
-      src: "{{ django_initialdump_path }}"
-      dest: "/tmp/{{ django_initialdump_path | basename }}"
+      src: "{{ django_initial_archive_path }}"
+      dest: "/tmp/{{ django_initial_archive_path | basename }}"
     when: not localdump_stat_result.stat.exists
 
   - name: Import copied dump into mysql db
-    mysql_db:
-      name: "{{ django_dbname }}"
-      state: import
-      target: "/tmp/{{ django_initialdump_path | basename }}"
+    shell: "tar xOf {{ django_initial_archive_path | basename }} dump.sql | mysql -D {{ django_dbname }}"
     when: not localdump_stat_result.stat.exists
   when: "'empty' in is_database_empty.stdout"
 
