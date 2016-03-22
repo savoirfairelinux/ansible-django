@@ -1,2 +1,2 @@
 #!/bin/bash
-mysqldump -u {{ django_dbuser }} --password="{{ django_dbpass }}" -d {{ django_dbname }} 
+mysqldump -u {{ django_dbuser }} --password="{{ django_dbpass }}" {{ django_dbname }} 
