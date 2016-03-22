@@ -26,6 +26,15 @@
     - "{{ django_path }}"
     - "{{ django_static_path }}"
     - "{{ django_media_path }}"
+
+# Every django project has an easy-to-use dumpdb.sh script placed in django_path
+- name: Ensure that we have a dumpdb.sh script
+  template:
+    src: "dumpdb_{{ django_dbtype}}.sh"
+    dest: "{{ django_path }}/dumpdb.sh"
+    owner: "{{ django_user }}"
+    mode: u=rwx,g=,o=
+
 - include: srcsync.yml
 - block:
   - name: Create a virtualenv (py3) for django
