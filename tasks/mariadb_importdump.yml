@@ -19,7 +19,7 @@
     when: not localdump_stat_result.stat.exists
 
   - name: Import copied dump into mysql db
-    shell: "tar xOf {{ django_initial_archive_path | basename }} dump.sql | mysql -D {{ django_dbname }}"
+    shell: "tar xOf /tmp/{{ django_initial_archive_path | basename }} dump.sql | mysql -D {{ django_dbname }}"
     when: not localdump_stat_result.stat.exists
   when: "'empty' in is_database_empty.stdout"
 
