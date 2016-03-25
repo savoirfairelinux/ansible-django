@@ -13,7 +13,12 @@
     - nginx restart
 
 - name: Setup systemd service
-  template: src=uwsgi_systemd dest=/etc/systemd/system/django-wsgi.service owner=root group=root mode=0644
+  template:
+    src: uwsgi_systemd
+    dest: "/etc/systemd/system/{{ django_name }}-wsgi.service"
+    owner: root
+    group: root
+    mode: 0644
   register: wsgi_service
   notify:
     - wsgi restart
@@ -24,4 +29,4 @@
   when: wsgi_service|changed
 
 - name: Ensure that the wsgi service is enabled
-  service: name=django-wsgi enabled=yes
+  service: "name={{ django_name }}-wsgi enabled=yes"

@@ -9,14 +9,12 @@
   notify: nginx restart
 
 - name: Create nginx sites config
-  template: src={{ item }}.conf dest=/etc/nginx/sites-available/{{ item }}.conf
-  with_items: "{{ nginx_config_files }}"
+  template: src=django.conf dest=/etc/nginx/sites-available/{{ django_name }}.conf
 
 - name: Create symbolic links for sites config to enable sites
   file:
-    path: "/etc/nginx/sites-enabled/{{ item }}.conf"
+    path: "/etc/nginx/sites-enabled/{{ django_name }}.conf"
     state: link
-    src: "/etc/nginx/sites-available/{{ item }}.conf"
-  with_items: "{{ nginx_config_files }}"
+    src: "/etc/nginx/sites-available/{{ django_name }}.conf"
   notify:
     - nginx restart

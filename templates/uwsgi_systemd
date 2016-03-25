@@ -1,5 +1,5 @@
 [Unit]
-Description=uWSGI Instance to serve django
+Description=uWSGI Instance to serve {{ django_name }}
 After=syslog.target
 
 [Service]

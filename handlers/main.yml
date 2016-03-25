@@ -3,4 +3,4 @@
   service: name=nginx state=restarted
 
 - name: wsgi restart
-  service: name=django-wsgi state=restarted
+  service: "name={{ django_name}}-wsgi state=restarted"
