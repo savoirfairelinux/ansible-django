@@ -84,6 +84,7 @@
       # symlink it.
       link: "{{ django_debug }}"
       virtualenv: "{{ django_env }}"
+    changed_when: false
   become: yes
   become_user: "{{ django_user }}"
 
@@ -95,6 +96,7 @@
       group: www-data
       recurse: yes
       mode: "u=rwX,g=rX,o=" # X != x, remember
+  changed_when: false
   with_items:
     - "{{ django_static_path }}"
     - "{{ django_media_path }}"
