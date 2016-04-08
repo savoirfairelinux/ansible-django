@@ -1,6 +1,3 @@
 ---
 - name: nginx restart
   service: name=nginx state=restarted
-
-- name: wsgi restart
-  service: "name={{ django_name}}-wsgi state=restarted"

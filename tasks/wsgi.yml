@@ -8,8 +8,8 @@
 
 - name: Create uWSGI config
   template: src=uwsgi.ini dest={{ django_path }}/uwsgi.ini
+  register: wsgi_config
   notify:
-    - wsgi restart
     - nginx restart
 
 - name: Setup systemd service
@@ -21,7 +21,6 @@
     mode: 0644
   register: wsgi_service
   notify:
-    - wsgi restart
     - nginx restart
 
 - name: Reload systemd because we've just updated a service
@@ -30,3 +29,8 @@
 
 - name: Ensure that the wsgi service is enabled
   service: "name={{ django_name }}-wsgi enabled=yes"
+
+# We can't use a handler for this, because handlers don't work well with dynamic parameters.
+- name: Restart uWSGI service
+  service: "name={{ django_name }}-wsgi state=restarted"
+  when: wsgi_service|changed or wsgi_config|changed
