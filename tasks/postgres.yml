@@ -23,7 +23,12 @@
 - name: Ensure that our cluster is created
   shell: "pg_createcluster 9.4 main --start"
   when: pg_isready_result|failed
+
 - block:
+    - name: Drop our DB (so that we can re-import it)
+      postgresql_db: name={{ django_dbname }} state=absent
+      when: django_force_db_import
+
     - name: Ensure that we have a DB
       postgresql_db: "name={{ django_dbname }}"
 

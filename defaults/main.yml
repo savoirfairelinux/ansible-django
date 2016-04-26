@@ -51,6 +51,8 @@ django_dbengine_name: "django.db.backends.{{ (django_dbtype == 'postgres') | ter
 # This path can be either on the remote or on the host. We will first check on the remote for the
 # file and, if it doesn't exist, we try to find that path on the host and copy the file over.
 django_initial_archive_path: ""
+# This flag can be set in order to force an import of the DB dump even if there's already a DB
+django_force_db_import: no
 # Whether we run django in debug mode.
 django_debug: no
 # Ends up in SECRET_KEY setting.
@@ -68,4 +70,3 @@ django_ssl_key_path: ""
 # List of config templates that will be generated during this role execution.
 nginx_config_files:
   - django
-

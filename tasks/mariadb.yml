@@ -10,6 +10,10 @@
 - name: Ensure that mariadb is started
   service: name=mysql state=started enabled=yes
 
+- name: Drop our DB (so that we can re-import it)
+  mysql_db: name={{ django_dbname }} state=absent
+  when: django_force_db_import
+
 - name: Ensure that we have a DB
   mysql_db: "name={{ django_dbname }}"
 
