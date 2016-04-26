@@ -1,0 +1,30 @@
+---
+- name: Is our databate empty?
+  shell: "psql -c \"select case when count(*)>0 then 'populated' else 'empty' end as status from information_schema.tables where table_catalog = '{{ django_dbname }}' and table_schema = 'public';\" -d {{ django_dbname }}"
+  register: is_database_empty
+  become: yes
+  become_user: postgres
+- block:
+  - name: Is our initial archive file on the remote?
+    stat:
+      path: "{{ django_initial_archive_path }}"
+    register: localdump_stat_result
+
+  - name: Import local archive's dump into postgresql db
+    shell: "tar xOf {{ django_initial_archive_path }} dump.sql | psql -d {{ django_dbname }}"
+    when: localdump_stat_result.stat.exists
+
+  - name: Copy DB dump over
+    copy:
+      src: "{{ django_initial_archive_path }}"
+      dest: "/tmp/{{ django_initial_archive_path | basename }}"
+    when: not localdump_stat_result.stat.exists
+
+  - name: Import copied dump into postgresql db
+    shell: "tar xOf /tmp/{{ django_initial_archive_path | basename }} dump.sql | psql -d {{ django_dbname }}"
+    when: not localdump_stat_result.stat.exists
+
+  become: yes
+  become_user: postgres
+
+  when: "'empty' in is_database_empty.stdout"
