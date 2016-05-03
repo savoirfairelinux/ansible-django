@@ -4,4 +4,10 @@
     name: "{{ django_user }}"
     createhome: no
     shell: /bin/bash
+- name: Ensure that our base project path has proper permissions
+  file:
+    path: "{{ django_path }}"
+    owner: "{{ django_user }}"
+    group: www-data
+    mode: ug=rwx,o=
 
