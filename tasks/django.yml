@@ -27,13 +27,16 @@
     - "{{ django_static_path }}"
     - "{{ django_media_path }}"
 
-# Every django project has an easy-to-use dumpdb.sh script placed in django_path
-- name: Ensure that we have a dumpdb.sh script
+# Every django project has easy-to-use dumpdb/restoredb scripts placed in django_path
+- name: Ensure that we have a dumpdb/restpredb scripts
   template:
-    src: "dumpdb_{{ django_dbtype}}.sh"
-    dest: "{{ django_path }}/dumpdb.sh"
+    src: "{{ item }}_{{ django_dbtype}}.sh"
+    dest: "{{ django_path }}/{{ item }}.sh"
     owner: "{{ django_user }}"
     mode: u=rwx,g=,o=
+  with_items:
+    - dumpdb
+    - restoredb
 
 - include: srcsync.yml
 - block:
