@@ -38,6 +38,9 @@
     - dumpdb
     - restoredb
 
+- set_fact:
+    is_database_empty: "{{ 'empty' in db_empty_check.stdout }}"
+
 - name: Initial restore DB/media from backup if needed
   shell: "{{ backup_cron_restore_script_path|mandatory }}"
   become: yes
