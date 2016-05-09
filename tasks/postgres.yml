@@ -25,18 +25,14 @@
   when: pg_isready_result|failed
 
 - block:
-    - name: Drop our DB (so that we can re-import it)
-      postgresql_db: name={{ django_dbname }} state=absent
-      when: django_force_db_import
-
     - name: Ensure that we have a DB
       postgresql_db: "name={{ django_dbname }}"
 
     - name: Ensure that we have a DB user
       postgresql_user: "name={{ django_dbuser }} db={{ django_dbname }} password={{ django_dbpass }} priv=ALL role_attr_flags=CREATEDB"
 
+    - name: Is our databate empty?
+      shell: "psql -c \"select case when count(*)>0 then 'populated' else 'empty' end as status from information_schema.tables where table_catalog = '{{ django_dbname }}' and table_schema = 'public';\" -d {{ django_dbname }}"
+      register: is_database_empty
   become: yes
   become_user: postgres
-
-- include: postgres_importdump.yml
-  when: "{{ django_initial_archive_path != '' }}"

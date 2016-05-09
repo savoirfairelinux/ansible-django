@@ -10,10 +10,6 @@
 - name: Ensure that mariadb is started
   service: name=mysql state=started enabled=yes
 
-- name: Drop our DB (so that we can re-import it)
-  mysql_db: name={{ django_dbname }} state=absent
-  when: django_force_db_import
-
 - name: Ensure that we have a DB
   mysql_db: "name={{ django_dbname }}"
 
@@ -22,5 +18,8 @@
     name: "{{ django_dbuser }}"
     priv: "{{ django_dbname }}.*:ALL,GRANT/test_{{ django_dbname }}.*:ALL,GRANT"
     password: "{{ django_dbpass }}"
-- include: mariadb_importdump.yml
-  when: "{{ django_initial_archive_path != '' }}"
+
+- name: Is our databate empty?
+  shell: "mysql -e \"select if(count(*)>0,'populated','empty') as status from information_schema.tables where TABLE_SCHEMA = '{{ django_dbname }}'\""
+  register: is_database_empty
+

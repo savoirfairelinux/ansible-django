@@ -38,6 +38,12 @@
     - dumpdb
     - restoredb
 
+- name: Initial restore DB/media from backup if needed
+  shell: "{{ backup_cron_restore_script_path|mandatory }}"
+  become: yes
+  become_user: "{{ django_user }}"
+  when: is_database_empty
+
 - include: srcsync.yml
 - block:
   - name: Create a virtualenv (py3) for django

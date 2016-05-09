@@ -44,15 +44,6 @@ django_dbname: "{{ django_name }}"
 django_dbpass: whatever
 # Value of the ENGINE param in Django settings' DATABASES dictionary.
 django_dbengine_name: "django.db.backends.{{ (django_dbtype == 'postgres') | ternary('postgresql_psycopg2', 'mysql') }}"
-# If specified, we populate our newly created project with the contents of the archive, which
-# is expected to be a tar.gz. In the tar, we minimally expect a "dump.sql" file, which we'll use
-# to populate our DB. We also optionally expect a "media" folder, which we'll populate our media
-# folder with.
-# This path can be either on the remote or on the host. We will first check on the remote for the
-# file and, if it doesn't exist, we try to find that path on the host and copy the file over.
-django_initial_archive_path: ""
-# This flag can be set in order to force an import of the DB dump even if there's already a DB
-django_force_db_import: no
 # Whether we run django in debug mode.
 django_debug: no
 # Ends up in SECRET_KEY setting.
