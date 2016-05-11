@@ -12,6 +12,13 @@ instances.
 * Debian Jessie on the target system
 * A provisioning that runs [ansible-common][ansible-common] before this.
 
+## Conventions
+
+If `django_provide_initial_data` is set, we're expected to have a
+`django_initial_data_restore_script` that takes care of importing an initial DB dump and initial
+media files into our project. [ansible-zbackup][ansible-zbackup] and
+[ansible-backup-cron][ansible-backup-cron] are well suited for this.
+
 ## Usage
 
 You call this role as with any other roles. See [vars file](defaults/main.yml) for customisation
@@ -54,4 +61,6 @@ account immediately. See `django_project_symlink_dest`.
 [nginx]: https://www.nginx.com/
 [uwsgi]: https://github.com/unbit/uwsgi-docs
 [ansible-common]: https://gitlab.savoirfairelinux.com/devops/ansible-common
+[ansible-zbackup]: https://github.com/savoirfairelinux/ansible-zbackup
+[ansible-backup-cron]: https://github.com/savoirfairelinux/ansible-backup-cron
 

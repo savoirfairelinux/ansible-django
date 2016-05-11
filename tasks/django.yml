@@ -42,10 +42,10 @@
     is_database_empty: "{{ 'empty' in db_empty_check.stdout }}"
 
 - name: Initial restore DB/media from backup if needed
-  shell: "{{ backup_cron_restore_script_path|mandatory }}"
+  shell: "{{ django_initial_data_restore_script }}"
   become: yes
   become_user: "{{ django_user }}"
-  when: is_database_empty
+  when: django_provide_initial_data and is_database_empty
 
 - include: srcsync.yml
 - block:

@@ -61,3 +61,11 @@ django_ssl_key_path: ""
 # List of config templates that will be generated during this role execution.
 nginx_config_files:
   - django
+
+# If set, we will try, before installing Django, to provide initial data for it, that is, a DB
+# and media files. We will do so through django_initial_data_restore_script.
+django_provide_initial_data: no
+
+# Path of the script to call to restore our DB and media files. It's expected to import SQL dumps
+# from backup into our django_dbname and to restore media files into django_media_path.
+django_initial_data_restore_script: "{{ django_path }}/restore.sh"

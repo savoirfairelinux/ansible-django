@@ -1,9 +1,0 @@
----
-dependencies:
-  - role: zbackup
-    zbackup_storage_path: "{{ django_path }}/backups"
-    zbackup_owner: "{{ django_user }}"
-  - role: backup-cron
-    backup_cron_user: "{{ django_user }}"
-    backup_cron_base_path: "{{ django_path }}"
-
