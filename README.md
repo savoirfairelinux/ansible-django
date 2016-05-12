@@ -11,6 +11,10 @@ instances.
 * Ansible 2.0+
 * Debian Jessie on the target system
 * A provisioning that runs [ansible-common][ansible-common] before this.
+* MariaDB or PostgreSQL installed and running. Recommended roles:
+    * [ansible-mariadb-install][ansible-mariadb-install]
+    * [ansible-postgres-install][ansible-postgres-install]
+* For MariaDB, we expect passwordless login when `root`. It implies having a `/root/.my.cnf`.
 
 ## Conventions
 
@@ -63,4 +67,6 @@ account immediately. See `django_project_symlink_dest`.
 [ansible-common]: https://gitlab.savoirfairelinux.com/devops/ansible-common
 [ansible-zbackup]: https://github.com/savoirfairelinux/ansible-zbackup
 [ansible-backup-cron]: https://github.com/savoirfairelinux/ansible-backup-cron
+[ansible-mariadb-install]: https://github.com/hsoft/ansible-mariadb-install
+[ansible-postgres-install]: https://github.com/savoirfairelinux/ansible-postgres-install
 
