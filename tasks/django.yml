@@ -64,8 +64,7 @@
 
   - name: Create local_settings.py
     template: src=local_settings.py dest={{ django_path }}/local_settings.py
-    notify:
-      - wsgi restart
+    register: local_settings_config
 
   - name: Symlink local_settings.py into our venv's site-packages
     file:
