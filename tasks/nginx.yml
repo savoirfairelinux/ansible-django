@@ -1,14 +1,3 @@
----
-- name: Ensure packages needed for nginx are present
-  apt: name={{ item }} state=latest
-  with_items:
-    - nginx
-    - ssl-cert # needed for snakeoil certs
-
-- name: Delete default site
-  file: path=/etc/nginx/sites-enabled/default state=absent
-  notify: nginx restart
-
 - name: Create nginx sites config
   template: src=django.conf dest=/etc/nginx/sites-available/{{ django_name }}.conf
   notify:
