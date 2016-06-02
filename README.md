@@ -11,6 +11,7 @@ instances.
 * Ansible 2.0+
 * Debian Jessie on the target system
 * A provisioning that runs [ansible-common][ansible-common] before this.
+* For SSL with Let's Encrypt, you need [ansible-acme-nginx][ansible-acme-nginx]
 * Nginx installed. Recommended role: [ansible-nginx][ansible-nginx]
 * MariaDB or PostgreSQL installed and running. Recommended roles:
     * [ansible-mariadb-install][ansible-mariadb-install]
@@ -68,6 +69,7 @@ account immediately. See `django_project_symlink_dest`.
 [ansible-common]: https://gitlab.savoirfairelinux.com/devops/ansible-common
 [ansible-zbackup]: https://github.com/savoirfairelinux/ansible-zbackup
 [ansible-backup-cron]: https://github.com/savoirfairelinux/ansible-backup-cron
+[ansible-acme-nginx]: https://github.com/hsoft/ansible-acme-nginx
 [ansible-nginx]: https://github.com/savoirfairelinux/ansible-nginx
 [ansible-mariadb-install]: https://github.com/hsoft/ansible-mariadb-install
 [ansible-postgres-install]: https://github.com/savoirfairelinux/ansible-postgres-install

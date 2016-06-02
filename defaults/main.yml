@@ -54,15 +54,6 @@ django_secret_key: whatever
 django_uwsgi_process_count: 5
 # Fixtures to load in django after deployment. list of paths relative to manage.py
 django_fixtures_to_load: []
-# Set to yes if you want to enable SSL
-django_ssl: no
-# Path to SSL cert
-django_ssl_cert_path: ""
-# Path to SSL private key
-django_ssl_key_path: ""
-# List of config templates that will be generated during this role execution.
-nginx_config_files:
-  - django
 
 # If set, we will try, before installing Django, to provide initial data for it, that is, a DB
 # and media files. We will do so through django_initial_data_restore_script.
