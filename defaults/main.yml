@@ -1,4 +1,3 @@
----
 # Name used as a default value in most variables below
 django_name: django
 # Whether the project is in python 3
@@ -62,3 +61,7 @@ django_provide_initial_data: no
 # Path of the script to call to restore our DB and media files. It's expected to import SQL dumps
 # from backup into our django_dbname and to restore media files into django_media_path.
 django_initial_data_restore_script: "{{ django_path }}/restore.sh"
+
+# If set, we will disallow robots by including the "disallow_robots" snippet provided by the
+# nginx role.
+django_disallow_robots: no
