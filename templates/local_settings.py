@@ -18,5 +18,11 @@ PROJECT_ROOT = '{{ django_path }}'
 GIT_ROOT = '{{ django_project_path }}'
 SRC_ROOT = '{{ django_src_path }}'
 PROJECT_DOMAIN = '{{ django_domain_name }}'
+EXTRA_DOMAINS = [
+    {% for domain in django_extra_domain_names|default([]) -%}
+    '{{ domain }}',
+    {%- endfor %}
+]
+ALLOWED_HOSTS = [PROJECT_DOMAIN] + EXTRA_DOMAINS
 PROJECT_ENVPATH = '{{ django_env }}'
 

@@ -4,8 +4,15 @@ django_name: django
 django_ispython3: yes
 # Root path of the django project
 django_path: "/opt/{{ django_name }}"
-# Domain name under which the project is served. Ends up in ALLOWED_HOSTS.
+
+# Domain name under which the project is served. Ends up in ALLOWED_HOSTS and as PROJECT_DOMAIN
+# in local_settings. It also, of course, ends up in nginx conf as server_name.
 django_domain_name: "{{ django_name }}.vagrant.dev"
+
+# Extra domain names to support in this project. Ends up in ALLOWED_HOSTS. It's also added to nginx
+# conf's server_name.
+django_extra_domain_names: []
+
 # Path of the virtualenv where we install python dependencies
 django_env: "{{ django_path }}/env"
 # Path where the source of the project is placed.
