@@ -72,3 +72,7 @@ django_initial_data_restore_script: "{{ django_path }}/restore.sh"
 # If set, we will disallow robots by including the "disallow_robots" snippet provided by the
 # nginx role.
 django_disallow_robots: no
+
+# If set, our nginx config will only answer to HTTPS requests, ignoring requests on port 80.
+django_ssl_only: no
+
