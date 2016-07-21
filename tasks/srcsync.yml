@@ -16,6 +16,9 @@
       dest: "{{ django_project_path }}"
       accept_hostkey: yes
       recursive: no
+      # Your repo is not supposed to be dirty in real (non-local) environments. If they are,
+      # shame on you! and, also, you've lost your changes!
+      force: yes
     register: src_git
 
   - name: Fix synced src's permissions
