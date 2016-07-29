@@ -39,25 +39,38 @@ django_project_repo_version: master
 # If set, we place a symlink at django_project_path pointing to this path. Usually used in
 # Vagrant environment, allowing us to do live reloads upon file edits.
 django_project_symlink_dest: ""
+
 # Owner of django_path. Most commands in this role are ran under this user.
 # Will be created if it doesn't exist.
 django_user: "{{ django_name }}"
+
 # Type of database to install. Choices: postgres, mariadb
 django_dbtype: postgres
+
 # User to use for db connection.
 django_dbuser: "{{ django_user }}"
+
 # DB name to use.
 django_dbname: "{{ django_name }}"
+
 # password to use for db connection.
 django_dbpass: whatever
+
 # Value of the ENGINE param in Django settings' DATABASES dictionary.
 django_dbengine_name: "django.db.backends.{{ (django_dbtype == 'postgres') | ternary('postgresql_psycopg2', 'mysql') }}"
+
 # Whether we run django in debug mode.
 django_debug: no
+
 # Ends up in SECRET_KEY setting.
 django_secret_key: whatever
+
+# Arbitrary python code to add to local_settings.py. Will be appended as-is to the end of the file.
+django_env_settings_extra: ''
+
 # Ends up in "processes" uwsgi config
 django_uwsgi_process_count: 5
+
 # Fixtures to load in django after deployment. list of paths relative to manage.py
 django_fixtures_to_load: []
 

@@ -26,3 +26,5 @@ EXTRA_DOMAINS = [
 ALLOWED_HOSTS = [PROJECT_DOMAIN] + EXTRA_DOMAINS
 PROJECT_ENVPATH = '{{ django_env }}'
 
+{{ django_env_settings_extra }}
+
