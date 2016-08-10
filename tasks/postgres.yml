@@ -8,6 +8,7 @@
 
     - name: Is our databate empty?
       shell: "psql -c \"select case when count(*)>0 then 'populated' else 'empty' end as status from information_schema.tables where table_catalog = '{{ django_dbname }}' and table_schema = 'public';\" -d {{ django_dbname }}"
-      register: db_empty_check
+      register: postgres_db_empty_check
+      changed_when: "'empty' in postgres_db_empty_check.stdout"
   become: yes
   become_user: postgres

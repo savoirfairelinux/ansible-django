@@ -38,9 +38,6 @@
     - dumpdb
     - restoredb
 
-- set_fact:
-    is_database_empty: "{{ 'empty' in db_empty_check.stdout }}"
-
 - name: Initial restore DB/media from backup if needed
   shell: "{{ django_initial_data_restore_script }}"
   become: yes

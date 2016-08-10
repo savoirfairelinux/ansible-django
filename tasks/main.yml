@@ -13,6 +13,9 @@
 - include: mariadb.yml
   when: django_dbtype == 'mariadb'
 
+- set_fact:
+    is_database_empty: "{{ postgres_db_empty_check|changed or mariadb_db_empty_check|changed }}"
+
 - include: django.yml
 - include: wsgi.yml
 - include: nginx.yml

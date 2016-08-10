@@ -10,5 +10,6 @@
 
 - name: Is our databate empty?
   shell: "mysql -e \"select if(count(*)>0,'populated','empty') as status from information_schema.tables where TABLE_SCHEMA = '{{ django_dbname }}'\""
-  register: db_empty_check
+  register: mariadb_db_empty_check
+  changed_when: "'empty' in mariadb_db_empty_check.stdout"
 
