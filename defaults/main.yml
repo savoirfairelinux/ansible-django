@@ -1,3 +1,7 @@
+# If set, running the role will remove all files that it normally creates. It doesn't uninstall
+# packages, however.
+django_uninstall: no
+
 # Name used as a default value in most variables below
 django_name: django
 # Whether the project is in python 3

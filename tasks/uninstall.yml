@@ -1,0 +1,31 @@
+# We don't include a timeout for this prompt because, as a safeguard measure, we don't want
+# django uninstallations to run unattended. Therefore, if this is ran in an unattended setting
+# (jenkins for example), it will hang, but that's what we want.
+- pause:
+    prompt: "ALERT! Uninstalling the role django {{ django_name }}. Last chance to abort (Ctrl+C)!"
+
+- name: Remove nginx config
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "/etc/nginx/sites-enabled/{{ django_name }}.conf"
+    - "/etc/nginx/sites-available/{{ django_name }}.conf"
+  notify: nginx restart
+
+- name: Remove database (postgres)
+  postgresql_db: "name={{ django_dbname }} state=absent"
+  when: django_dbtype == 'postgres'
+  become: yes
+  become_user: postgres
+
+- name: Remove database (mysql)
+  mysql_db: "name={{ django_dbname }} state=absent"
+  when: django_dbtype == 'mariadb'
+
+- name: Remove project folder
+  file:
+    path: "{{ django_path }}"
+    state: absent
+
+
