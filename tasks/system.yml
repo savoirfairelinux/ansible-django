@@ -1,9 +1,11 @@
 ---
-- name: Ensure that django_user exists
+- name: Ensure that django_user exists and have the group www-data
   user:
     name: "{{ django_user }}"
     createhome: no
     shell: /bin/bash
+    append: yes
+    groups: "www-data"
 - name: Ensure that our base project path has proper permissions
   file:
     path: "{{ django_path }}"
