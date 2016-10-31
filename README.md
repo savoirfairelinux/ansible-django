@@ -9,8 +9,10 @@ instances.
 ## Requirements
 
 * Ansible 2.0+
-* Debian Jessie on the target system
-* A provisioning that runs [ansible-common][ansible-common] before this.
+* One of the supported target systems:
+  * Ubuntu Xenial
+  * Debian Jessie
+* For git deployment, you need git
 * For SSL with Let's Encrypt, you need [ansible-acme-nginx][ansible-acme-nginx]
 * Nginx installed. Recommended role: [ansible-nginx][ansible-nginx]
 * MariaDB or PostgreSQL installed and running. Recommended roles:
@@ -66,7 +68,6 @@ account immediately. See `django_project_symlink_dest`.
 
 [nginx]: https://www.nginx.com/
 [uwsgi]: https://github.com/unbit/uwsgi-docs
-[ansible-common]: https://gitlab.savoirfairelinux.com/devops/ansible-common
 [ansible-zbackup]: https://github.com/savoirfairelinux/ansible-zbackup
 [ansible-backup-cron]: https://github.com/savoirfairelinux/ansible-backup-cron
 [ansible-acme-nginx]: https://github.com/hsoft/ansible-acme-nginx
