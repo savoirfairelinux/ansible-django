@@ -12,7 +12,8 @@ instances.
 * One of the supported target systems:
   * Ubuntu Xenial
   * Debian Jessie
-* For git deployment, you need git
+* For `giturl` deployment, you need git
+* For `rsync` deployment, you need rsync
 * For SSL with Let's Encrypt, you need [ansible-acme-nginx][ansible-acme-nginx]
 * Nginx installed. Recommended role: [ansible-nginx][ansible-nginx]
 * MariaDB or PostgreSQL installed and running. Recommended roles:
@@ -43,11 +44,12 @@ Here's an example usage for a local development environment:
     - role: django
       django_debug: yes
       django_user: vagrant
+      django_deployment_type: symlink
       django_project_symlink_dest: "/vagrant"
 ```
 
 As you can see, we override `django_debug` because we're in development mode, and we use
-`django_project_symlink_dest` to set the project in "symlink mode", which allows us to trigger
+`django_deployment_type` to set the project in "symlink mode", which allows us to trigger
 live reloads when we edit files on the host.
 
 ## Features higlight
@@ -61,10 +63,11 @@ Your backend can be either Postgres SQL (default) or MariaDB. You can choose you
 
 ### Git clone or symlink
 
-The project's source that lives at `django_project_path` can be either from a git clone or a
-symlink. In a "real" environment, you'll want to clone from a git repo, but on a local environment,
-you'll want to symlink to your Vagrant share so that your changes to the code are taken into
-account immediately. See `django_project_symlink_dest`.
+The project's source that lives at `django_project_path` can be either from a git clone, a rsync
+from a local path on the control machine, or a symlink. In a "real" environment, you'll want to
+clone from a git repo or an rsync, but on a local environment, you'll want to symlink to your
+Vagrant share so that your changes to the code are taken into account immediately. See
+`django_deployment_type`.
 
 [nginx]: https://www.nginx.com/
 [uwsgi]: https://github.com/unbit/uwsgi-docs

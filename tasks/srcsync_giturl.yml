@@ -1,0 +1,21 @@
+# Git clone scenario
+- assert:
+    that: "django_project_repo_url != \"\""
+
+- name: Clone the repo for the django project
+  git:
+    repo: "{{ django_project_repo_url }}"
+    version: "{{ django_project_repo_version }}"
+    dest: "{{ django_project_path }}"
+    accept_hostkey: yes
+    recursive: no
+    # Your repo is not supposed to be dirty in real (non-local) environments. If they are,
+    # shame on you! and, also, you've lost your changes!
+    force: yes
+  register: src_git
+  become: yes
+  become_user: "{{ django_user }}"
+
+- set_fact:
+    src_sync_changed: "{{ src_git.changed }}"
+

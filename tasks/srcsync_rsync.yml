@@ -1,0 +1,19 @@
+# Rsync scenario
+
+- assert:
+    that: "django_project_local_path != \"\""
+
+- name: Sync local src
+  synchronize:
+    src: "{{ django_project_local_path }}"
+    dest: "{{ django_project_path }}"
+    archive: no
+    recursive: yes
+    checksum: yes
+    rsync_opts:
+      - "--exclude=.git"
+  register: src_rsync
+
+- set_fact:
+    src_sync_changed: "{{ src_rsync.changed }}"
+

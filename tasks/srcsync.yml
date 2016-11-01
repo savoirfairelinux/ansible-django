@@ -1,33 +1,7 @@
----
-# Symlink scenario
-- name: Ensure project folder is symlinked
-  file:
-    path: "{{ django_project_path }}"
-    state: link
-    src: "{{ django_project_symlink_dest }}"
-  when: django_project_symlink_dest != ""
+- assert:
+    that: "django_deployment_type in ['giturl', 'symlink', 'rsync']"
 
-# Git clone scenario
-- block:
-  - name: Clone the repo for the django project
-    git:
-      repo: "{{ django_project_repo_url }}"
-      version: "{{ django_project_repo_version }}"
-      dest: "{{ django_project_path }}"
-      accept_hostkey: yes
-      recursive: no
-      # Your repo is not supposed to be dirty in real (non-local) environments. If they are,
-      # shame on you! and, also, you've lost your changes!
-      force: yes
-    register: src_git
+- include: "srcsync_{{ django_deployment_type }}.yml"
 
-  - name: Fix synced src's permissions
-    file:
-      path: "{{ django_src_path }}"
-      state: directory
-      recurse: yes
-      mode: "u=rwX,g=rX,o=" # X != x, remember
-  when: django_project_symlink_dest == ""
-  become: yes
-  become_user: "{{ django_user }}"
-
+- include: "srcsync_fixperms.yml"
+  when: "django_deployment_type != 'symlink'"
