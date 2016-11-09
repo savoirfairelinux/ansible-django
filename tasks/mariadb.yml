@@ -1,8 +1,8 @@
 ---
 - name: Ensure that we have a DB
   mysql_db:
-    name={{ django_dbname }}
-    encoding={{ mariadb_db_encoding|default('utf8mb4') }}
+    name: "{{ django_dbname }}"
+    encoding: "{{ django_db_encoding|default(omit) }}"
 
 - name: Ensure that we have a DB user
   mysql_user:
