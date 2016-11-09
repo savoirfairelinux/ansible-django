@@ -63,6 +63,10 @@ django_dbpass: whatever
 # Value of the ENGINE param in Django settings' DATABASES dictionary.
 django_dbengine_name: "django.db.backends.{{ (django_dbtype == 'postgres') | ternary('postgresql_psycopg2', 'mysql') }}"
 
+# Database encoding definition. By default will be used the system encoding provided.
+# Used by the moment only by mariadb.
+#django_db_encoding: 'db_encoding'
+
 # Whether we run django in debug mode.
 django_debug: no
 
