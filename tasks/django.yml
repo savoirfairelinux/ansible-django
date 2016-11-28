@@ -54,6 +54,14 @@
     command: "virtualenv {{ django_env }} --system-site-packages creates={{ django_env }}"
     when: not django_ispython3
 
+  # Some pip versions (namely v8.1.1) have weird problems when handling some package upgrade
+  # scenarios. To avoid this, we ensure that we're always at the latest version.
+  - name: Ensure that we're using pip's latest version
+    pip:
+      name: pip
+      state: latest
+      virtualenv: "{{ django_env }}"
+
   - name: Install django requirements
     command: "{{ django_env }}/bin/pip install -r {{ django_requirements_file }}"
     register: pip_install_result
