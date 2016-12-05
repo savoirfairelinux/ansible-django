@@ -21,6 +21,8 @@
 
   - include: django.yml
   - include: wsgi.yml
+
   - include: nginx.yml
+    when: django_nginx_installed
 
   when: not django_uninstall
