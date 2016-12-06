@@ -1,20 +1,20 @@
 ---
 - name: Ensure packages needed for Django are present
-  apt: name={{ item }} state=latest
+  apt: name={{ item }} state=present
   with_items:
     - libjpeg-dev # pillow
     - libpng12-dev # pillow
     - gettext
 
 - name: Ensure py2 packages needed for Django are present
-  apt: name={{ item }} state=latest
+  apt: name={{ item }} state=present
   with_items:
     - python-dev
     - python-virtualenv
   when: not django_ispython3
 
 - name: Ensure py3 packages needed for Django are present
-  apt: name={{ item }} state=latest
+  apt: name={{ item }} state=present
   with_items:
     - python3-dev
     - python3-venv
