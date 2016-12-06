@@ -28,9 +28,9 @@
     - "{{ django_media_path }}"
 
 # Every django project has easy-to-use dumpdb/restoredb scripts placed in django_path
-- name: Ensure that we have a dumpdb/restpredb scripts
+- name: Ensure that we have dumpdb/restoredb scripts
   template:
-    src: "{{ item }}_{{ django_dbtype}}.sh"
+    src: "{{ item }}_{{ django_dbtype }}.sh"
     dest: "{{ django_path }}/{{ item }}.sh"
     owner: "{{ django_user }}"
     mode: u=rwx,g=,o=
