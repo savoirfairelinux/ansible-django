@@ -90,8 +90,8 @@ django_provide_initial_data: no
 # from backup into our django_dbname and to restore media files into django_media_path.
 django_initial_data_restore_script: "{{ django_path }}/restore.sh"
 
-# If set, nginx will be configured for django, unset in case that you don't need to install nginx.
-django_nginx_installed: yes
+# If set, uwsgi+nginx will be configured for django, unset in case that you don't need to install them.
+django_create_uwsgi_config: yes
 
 # If set, we will disallow robots by including the "disallow_robots" snippet provided by the
 # nginx role.

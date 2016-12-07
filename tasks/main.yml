@@ -20,9 +20,11 @@
       is_database_empty: "{{ postgres_db_empty_check|changed or mariadb_db_empty_check|changed }}"
 
   - include: django.yml
+
   - include: wsgi.yml
+    when: django_create_uwsgi_config
 
   - include: nginx.yml
-    when: django_nginx_installed
+    when: django_create_uwsgi_config
 
   when: not django_uninstall

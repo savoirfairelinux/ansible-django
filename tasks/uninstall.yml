@@ -12,7 +12,7 @@
     - "/etc/nginx/sites-enabled/{{ django_name }}.conf"
     - "/etc/nginx/sites-available/{{ django_name }}.conf"
   notify: nginx restart
-  when: django_nginx_installed
+  when: django_create_uwsgi_config
 
 - name: Remove database (postgres)
   postgresql_db: "name={{ django_dbname }} state=absent"

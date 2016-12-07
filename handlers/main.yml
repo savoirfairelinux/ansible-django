@@ -1,4 +1,4 @@
 ---
 - name: nginx restart
   service: name=nginx state=restarted
-  when: django_nginx_installed
+  when: django_create_uwsgi_config
