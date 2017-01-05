@@ -12,6 +12,7 @@
     checksum: yes
     rsync_opts:
       - "--exclude=.git"
+      - "--delete"
   register: src_rsync
 
 - set_fact:
