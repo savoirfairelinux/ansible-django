@@ -1,0 +1,9 @@
+- name: Fix synced src's permissions
+  file:
+    path: "{{ django_src_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ django_user }}"
+    group: www-data
+    mode: "u=rwX,g=rX,o=" # X != x, remember
+

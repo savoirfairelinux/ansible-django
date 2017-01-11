@@ -36,13 +36,25 @@ django_static_path: "{{ django_path }}/static"
 django_media_path: "{{ django_path }}/media"
 # Path to a requirements file. This is what will be installed inside our virtualenv.
 django_requirements_file: "{{ django_project_path }}/requirements.txt"
-# URL to git repo of the project. if django_project_symlink_dest isn't set, this repo will be
-# cloned in django_project_path.
+
+# Specifies the way through which we deploy our project's source code. Possible values:
+#
+# * giturl: we clone django_project_repo_url into django_project_path
+# * symlink: we symlink django_project_path to django_project_symlink_dest
+# * rsync: we rsync the local django_project_local_path to django_project_path
+django_deployment_type: giturl
+
+# URL to git repo of the project. Used only if django_deployment_type == giturl
 django_project_repo_url: ""
 django_project_repo_version: master
-# If set, we place a symlink at django_project_path pointing to this path. Usually used in
-# Vagrant environment, allowing us to do live reloads upon file edits.
+
+# Path, on the target machine, to symlink django_project_path to.
+# Used only if django_deployment_type == symlink
 django_project_symlink_dest: ""
+
+# Path on the control machine where the source of the project is located. This will be rsynced
+# into django_project_path. Only used if django_deployment_type == rsync
+django_project_local_path: ""
 
 # Owner of django_path. Most commands in this role are ran under this user.
 # Will be created if it doesn't exist.

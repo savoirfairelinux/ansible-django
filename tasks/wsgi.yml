@@ -33,4 +33,4 @@
 # We can't use a handler for this, because handlers don't work well with dynamic parameters.
 - name: Restart uWSGI service
   service: "name={{ django_name }}-wsgi state=restarted"
-  when: wsgi_service.changed or wsgi_config.changed or src_git.changed or django_needs_restart
+  when: wsgi_service.changed or wsgi_config.changed or src_sync_changed or django_needs_restart
