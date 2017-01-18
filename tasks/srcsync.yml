@@ -27,7 +27,7 @@
       state: directory
       recurse: yes
       mode: "u=rwX,g=rX,o=" # X != x, remember
-  when: django_project_symlink_dest == ""
+  when: django_project_symlink_dest == "" and django_project_repo_url != ""
   become: yes
   become_user: "{{ django_user }}"
 
