@@ -76,8 +76,18 @@ django_secret_key: whatever
 # Arbitrary python code to add to local_settings.py. Will be appended as-is to the end of the file.
 django_env_settings_extra: ''
 
+# If set, uwsgi+nginx will be configured for django, unset in case that you don't need to install them.
+django_create_uwsgi_config: yes
+
 # Ends up in "processes" uwsgi config
 django_uwsgi_process_count: 5
+
+# Sets the "touch-reload" uwsgi option. This path, whenever it's touched, will cause the uwsgi
+# process to reload itself so that changed python code is properly reloaded.
+# The default path is the project directory because its mtime is generally updated each time we
+# checkout a new commit, which is the appropriate time for a reload.
+# You can set to "" to disable touch-reload.
+django_uwsgi_touch_reload_path: "{{ django_project_path }}"
 
 # Fixtures to load in django after deployment. list of paths relative to manage.py
 django_fixtures_to_load: []
@@ -89,9 +99,6 @@ django_provide_initial_data: no
 # Path of the script to call to restore our DB and media files. It's expected to import SQL dumps
 # from backup into our django_dbname and to restore media files into django_media_path.
 django_initial_data_restore_script: "{{ django_path }}/restore.sh"
-
-# If set, uwsgi+nginx will be configured for django, unset in case that you don't need to install them.
-django_create_uwsgi_config: yes
 
 # If set, we will disallow robots by including the "disallow_robots" snippet provided by the
 # nginx role.

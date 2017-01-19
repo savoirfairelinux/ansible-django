@@ -117,6 +117,9 @@
     - "{{ django_static_path }}"
     - "{{ django_media_path }}"
 
-- set_fact:
-    django_needs_restart: "{{ pip_install_result|changed or local_settings_config|changed }}"
+- name: Trigger a reload if our virtualenv or local_settings was updated
+  file:
+    path: "{{ django_uwsgi_touch_reload_path }}"
+    state: touch
+  when: "django_uwsgi_touch_reload_path != '' and (pip_install_result|changed or local_settings_config|changed)"
 
