@@ -8,7 +8,7 @@ instances.
 
 ## Requirements
 
-* Ansible 2.0+
+* Ansible 2.2+
 * One of the supported target systems:
   * Ubuntu Xenial
   * Debian Jessie
@@ -65,6 +65,13 @@ The project's source that lives at `django_project_path` can be either from a gi
 symlink. In a "real" environment, you'll want to clone from a git repo, but on a local environment,
 you'll want to symlink to your Vagrant share so that your changes to the code are taken into
 account immediately. See `django_project_symlink_dest`.
+
+### uwsgi touch reload
+
+By default, uwsgi is set up with `touch-reload` set to the root directory of the project (the git
+checkout directory). This directory's mtime is generally changed whenever we make a git checkout.
+Therefore, with this setting, you shouldn't have to worry about reloading uwsgi after a deploy,
+it's done automatically.
 
 [nginx]: https://www.nginx.com/
 [uwsgi]: https://github.com/unbit/uwsgi-docs
