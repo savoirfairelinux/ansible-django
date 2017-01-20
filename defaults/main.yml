@@ -23,19 +23,10 @@ django_env: "{{ django_path }}/env"
 django_project_path: "{{ django_path }}/project"
 # Path, inside the project's source, where "manage.py" lives.
 django_src_path: "{{ django_project_path }}/src"
-# python executable name. re-used in other variables below
-django_python2exec: python2.7
-django_python3exec: python3.4
-django_pythonexec: "{{ django_ispython3 | ternary(django_python3exec, django_python2exec) }}"
-# Path for the site-packages folder inside the virtualenv (you normally don't have to change this
-# unless it's the wrong path). This is where we go place the "local_settings.py" file.
-django_sitepackages_path: "{{ django_env }}/lib/{{ django_pythonexec }}/site-packages"
 # Path for STATIC_ROOT
 django_static_path: "{{ django_path }}/static"
 # Path for MEDIA_ROOT
 django_media_path: "{{ django_path }}/media"
-# Path to a requirements file. This is what will be installed inside our virtualenv.
-django_requirements_file: "{{ django_project_path }}/requirements.txt"
 # URL to git repo of the project. if django_project_symlink_dest isn't set, this repo will be
 # cloned in django_project_path.
 django_project_repo_url: ""
@@ -66,9 +57,6 @@ django_dbengine_name: "django.db.backends.{{ (django_dbtype == 'postgres') | ter
 # Database encoding definition. By default will be used the system encoding provided.
 # Used by the moment only by mariadb.
 #django_db_encoding: 'db_encoding'
-
-# Whether we run django in debug mode.
-django_debug: no
 
 # Ends up in SECRET_KEY setting.
 django_secret_key: whatever
