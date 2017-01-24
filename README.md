@@ -2,9 +2,10 @@
 
 *Provisions a Django project behind nginx/uwsgi, SFL style.*
 
-Running this roles results in a fully functional Django instance running behind [nginx][nginx] and
-[uwsgi][uwsgi]. This is used in SFL's project to provision local, staging and production Django
-instances.
+Running this role results in a fully functional system that can run a Django instance behind [nginx][nginx] and
+[uwsgi][uwsgi]. This is used in SFL's project to provision local, staging and production Django instances.
+This role doesn't deploy the considered Django project (requirements installation, migrations, ...).
+To do so you should use the [ansible-django-deploy][ansible-django-deploy] role and insert it after this `django` role in your playbook.
 
 ## Requirements
 
@@ -81,4 +82,4 @@ it's done automatically.
 [ansible-nginx]: https://github.com/savoirfairelinux/ansible-nginx
 [ansible-mariadb-install]: https://github.com/hsoft/ansible-mariadb-install
 [ansible-postgres-install]: https://github.com/savoirfairelinux/ansible-postgres-install
-
+[ansible-django-deploy]: https://github.com/savoirfairelinux/ansible-django-deploy
