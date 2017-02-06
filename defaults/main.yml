@@ -94,3 +94,12 @@ django_disallow_robots: no
 
 # If set, our nginx config will only answer to HTTPS requests, ignoring requests on port 80.
 django_ssl_only: no
+
+# django_env_variables can be used to define some environment variables that should be set before
+# running the Django application. For example:
+#
+# django_env_variables:
+#   - name: DJANGO_SETTINGS_MODULE
+#     value: myproject.settings
+#
+django_env_variables: []
