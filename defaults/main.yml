@@ -27,6 +27,9 @@ django_src_path: "{{ django_project_path }}/src"
 django_static_path: "{{ django_path }}/static"
 # Path for MEDIA_ROOT
 django_media_path: "{{ django_path }}/media"
+# Path for the maintenance page
+django_maintenance_path: "{{ django_path }}/maintenance"
+
 # URL to git repo of the project. if django_project_symlink_dest isn't set, this repo will be
 # cloned in django_project_path.
 django_project_repo_url: ""
