@@ -109,4 +109,4 @@ django_env_variables: {}
 django_redirect_domain_names: []
 
 # If set, access to /media/ directory will only be allow from this/these IP address, CIDR and/or domain
-nginx_restrict_media_access_to: {}
+nginx_restrict_media_access_to: []
