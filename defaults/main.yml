@@ -112,3 +112,6 @@ django_redirect_domain_names: []
 nginx_restrict_media_access_to: []
 
 nginx_client_max_body_size: "1m"
+
+# If defined to yes, will assume that a proxy is handling ssl for us and listen on port 80
+use_wildcard_ssl_proxy: no
