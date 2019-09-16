@@ -30,6 +30,7 @@
 
 # Every django project has easy-to-use dumpdb/restoredb scripts placed in django_path
 - name: Ensure that we have dumpdb/restoredb scripts
+  become: yes
   template:
     src: "{{ item }}_{{ django_dbtype }}.sh"
     dest: "{{ django_path }}/{{ item }}.sh"
@@ -48,4 +49,5 @@
 - include: srcsync.yml
 
 - name: Create maintenance page file
+  become: yes
   template: src=maintenance.html dest={{ django_maintenance_path }}/maintenance.html

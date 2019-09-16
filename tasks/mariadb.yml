@@ -1,10 +1,12 @@
 ---
 - name: Ensure that we have a DB
+  become: yes
   mysql_db:
     name: "{{ django_dbname }}"
     encoding: "{{ django_db_encoding|default(omit) }}"
 
 - name: Ensure that we have a DB user
+  become: yes
   mysql_user:
     name: "{{ django_dbuser }}"
     priv: "{{ django_dbname }}.*:ALL,GRANT/test_{{ django_dbname }}.*:ALL,GRANT"
