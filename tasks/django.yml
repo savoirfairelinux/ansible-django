@@ -21,6 +21,7 @@
   when: django_ispython3
 
 - name: Ensure required folders are there
+  become: yes
   file: path={{ item }} state=directory owner={{ django_user }}
   with_items:
     - "{{ django_path }}"
