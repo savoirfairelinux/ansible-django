@@ -6,6 +6,24 @@
   stat: path="/etc/nginx/snippets/acme_well_known.conf"
   register: acme_well_known_config_file
 
+- name: Make sites-available writable
+  become: yes
+  become_user: "{{ performcoop_username }}"
+  file:
+    path: /etc/nginx/sites-available/
+    mode: '0744'
+    recurse: yes
+    state: directory
+
+- name: Make sites-enabled writable
+  become: yes
+  become_user: "{{ performcoop_username }}"
+  file:
+    path: /etc/nginx/sites-enabled/
+    mode: '0744'
+    recurse: yes
+    state: directory
+
 - name: Create nginx sites config
   template: src=django.conf dest=/etc/nginx/sites-available/{{ django_name }}.conf
   notify:
