@@ -115,3 +115,6 @@ nginx_client_max_body_size: "1m"
 
 # If defined to yes, will assume that a proxy is handling ssl for us and listen on port 80
 use_wildcard_ssl_proxy: no
+
+# Arguments that you can add to mysqldump (see dumpdb_mariadb.sh)
+mysqldump_extra_args: ""
