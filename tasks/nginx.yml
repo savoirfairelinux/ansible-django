@@ -23,6 +23,7 @@
     state: directory
 
 - name: Create nginx sites config
+  become: yes
   template: src=django.conf dest=/etc/nginx/sites-available/{{ django_name }}.conf
   notify:
     - nginx restart
