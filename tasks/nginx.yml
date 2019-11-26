@@ -33,5 +33,6 @@
     path: "/etc/nginx/sites-enabled/{{ django_name }}.conf"
     state: link
     src: "/etc/nginx/sites-available/{{ django_name }}.conf"
+    force: yes
   notify:
     - nginx restart
