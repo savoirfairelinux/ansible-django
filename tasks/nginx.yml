@@ -29,6 +29,7 @@
     - nginx restart
 
 - name: Create symbolic links for sites config to enable sites
+  become: yes
   file:
     path: "/etc/nginx/sites-enabled/{{ django_name }}.conf"
     state: link
