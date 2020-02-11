@@ -25,7 +25,7 @@
 
 - name: Reload systemd because we've just updated a service
   shell: systemctl daemon-reload
-  when: wsgi_service|changed
+  when: wsgi_service.changed
 
 - name: Ensure that the wsgi service is enabled
   service: "name={{ django_name }}-wsgi enabled=yes"
