@@ -3,7 +3,7 @@
   apt: name={{ item }} state=present
   with_items:
     - libjpeg-dev # pillow
-    - libpng12-dev # pillow
+    - libpng-dev # pillow
     - gettext
 
 - name: Ensure py2 packages needed for Django are present
