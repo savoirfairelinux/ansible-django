@@ -1,4 +1,6 @@
 ---
 - name: nginx restart
   service: name=nginx state=restarted
+  become: true
+  become_method: sudo
   when: django_create_uwsgi_config
