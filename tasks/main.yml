@@ -1,8 +1,8 @@
-- include: uninstall.yml
+- include_tasks: uninstall.yml
   when: django_uninstall
 
 - block:
-  - include: system.yml
+  - import_tasks: system.yml
 
   # Database
   - name: Verify that we have a valid django_dbtype
@@ -10,21 +10,21 @@
       msg: "django_dbtype must be either 'postgres' or 'mariadb'"
     when: "django_dbtype not in ['postgres', 'mariadb']"
 
-  - include: postgres.yml
+  - import_tasks: postgres.yml
     when: django_dbtype == 'postgres'
 
-  - include: mariadb.yml
+  - import_tasks: mariadb.yml
     when: django_dbtype == 'mariadb'
 
   - set_fact:
       is_database_empty: "{{ postgres_db_empty_check.changed or mariadb_db_empty_check.changed }}"
 
-  - include: django.yml
+  - import_tasks: django.yml
 
-  - include: wsgi.yml
+  - import_tasks: wsgi.yml
     when: django_create_uwsgi_config
 
-  - include: nginx.yml
+  - import_tasks: nginx.yml
     when: django_create_uwsgi_config
 
   when: not django_uninstall

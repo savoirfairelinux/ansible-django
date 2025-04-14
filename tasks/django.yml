@@ -5,6 +5,8 @@
     - libjpeg-dev # pillow
     - libpng-dev # pillow
     - gettext
+    - pkg-config
+    - libcairo2-dev
 
 - name: Ensure py2 packages needed for Django are present
   apt: name={{ item }} state=present
@@ -47,7 +49,7 @@
   become_user: "{{ django_user }}"
   when: django_provide_initial_data and is_database_empty
 
-- include: srcsync.yml
+- include_tasks: srcsync.yml
 
 - name: Create maintenance page file
   become: yes

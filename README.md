@@ -80,6 +80,6 @@ it's done automatically.
 [ansible-backup-cron]: https://github.com/savoirfairelinux/ansible-backup-cron
 [ansible-acme-nginx]: https://github.com/hsoft/ansible-acme-nginx
 [ansible-nginx]: https://github.com/savoirfairelinux/ansible-nginx
-[ansible-mariadb-install]: https://github.com/hsoft/ansible-mariadb-install
+[ansible-mariadb-install]: https://github.com/savoirfairelinux/ansible-mariadb-install
 [ansible-postgres-install]: https://github.com/savoirfairelinux/ansible-postgres-install
 [ansible-django-deploy]: https://github.com/savoirfairelinux/ansible-django-deploy
