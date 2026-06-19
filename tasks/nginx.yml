@@ -37,3 +37,23 @@
     force: yes
   notify:
     - nginx restart
+
+- name: Create /etc/anubis directory
+  become: yes
+  file:
+    path: /etc/anubis
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  when: nginx_with_anubis | bool
+
+- name: Copy anubis nginx env config
+  become: yes
+  template:
+    src: anubis-nginx.env
+    dest: /etc/anubis/nginx.env
+    owner: root
+    group: root
+    mode: '0644'
+  when: nginx_with_anubis | bool
