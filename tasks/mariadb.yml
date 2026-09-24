@@ -1,9 +1,16 @@
 ---
+- name: Discover MariaDB socket
+  become: yes
+  command: mysql --protocol=SOCKET --batch --skip-column-names -e "SELECT @@socket"
+  register: django_mysql_socket
+  changed_when: false
+
 - name: Ensure that we have a DB
   become: yes
   mysql_db:
     name: "{{ django_dbname }}"
     encoding: "{{ django_db_encoding|default(omit) }}"
+    login_unix_socket: "{{ django_mysql_socket.stdout | trim }}"
 
 - name: Ensure that we have a DB user
   become: yes
@@ -11,10 +18,10 @@
     name: "{{ django_dbuser }}"
     priv: "{{ django_dbname }}.*:ALL,GRANT/test_{{ django_dbname }}.*:ALL,GRANT"
     password: "{{ django_dbpass }}"
+    login_unix_socket: "{{ django_mysql_socket.stdout | trim }}"
 
 - name: Is our databate empty?
   become: yes
   shell: "mysql -e \"select if(count(*)>0,'populated','empty') as status from information_schema.tables where TABLE_SCHEMA = '{{ django_dbname }}'\""
   register: mariadb_db_empty_check
   changed_when: "'empty' in mariadb_db_empty_check.stdout"
-
